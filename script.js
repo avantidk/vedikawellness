@@ -209,29 +209,31 @@
     var byId = {}; FOODS.forEach(function (f) { byId[f.id] = f; });
     var cats = []; FOODS.forEach(function (f) { if (cats.indexOf(f.c) < 0) cats.push(f.c); });
     var lastHealth = null;
+    function ico(n) { return '<svg class="ic" aria-hidden="true"><use href="#i-' + n + '"/></svg>'; }
     function art(id, size) { return '<img src="' + BASE + 'img/foods/' + id + '.svg" width="' + size + '" height="' + size + '" alt="" loading="lazy" decoding="async">'; }
     function shortName(f) { return isHi() ? f.h.split('(')[0].trim() : f.n.split('(')[0].trim(); }
+    function r1(x) { return Math.round(x * 10) / 10; }
 
     // tabs (supports #health / #plate / #sheet)
     function showTab(name) {
-      $$('#studioTabs .seg-btn').forEach(function (x) { var on = x.dataset.tab === name; x.classList.toggle('active', on); x.setAttribute('aria-selected', on); });
+      $$('#studioTabs .st-tab').forEach(function (x) { var on = x.dataset.tab === name; x.classList.toggle('active', on); x.setAttribute('aria-selected', on); });
       $$('.tabpane').forEach(function (p) { p.hidden = p.id !== 'pane-' + name; });
     }
-    $$('#studioTabs .seg-btn').forEach(function (t) { t.addEventListener('click', function () { showTab(t.dataset.tab); }); });
+    $$('#studioTabs .st-tab').forEach(function (t) { t.addEventListener('click', function () { showTab(t.dataset.tab); }); });
     var hashTab = location.hash.replace('#', '');
     if (['health', 'plate', 'sheet'].indexOf(hashTab) >= 0) showTab(hashTab);
 
     function chips(el, list, cur, on) {
       el.innerHTML = '';
       list.forEach(function (x) {
-        var b = document.createElement('button'); b.type = 'button'; b.className = 's-chip' + (x.v === cur ? ' on' : ''); b.innerHTML = x.l;
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'st-chip' + (x.v === cur ? ' on' : ''); b.innerHTML = x.l;
         b.addEventListener('click', function () { on(x.v); }); el.appendChild(b);
       });
     }
     function catList() { return [{ v: 'all', l: bi('All', 'सभी') }].concat(cats.map(function (c) { return { v: c, l: bi(c, CAT_HI[c] || c) }; })); }
-    function r1(x) { return Math.round(x * 10) / 10; }
+    function kpi(en, hi, val, unit) { return '<div class="kpi"><small>' + bi(en, hi) + '</small><b>' + val + '</b>' + (unit ? '<span>' + unit + '</span>' : '') + '</div>'; }
 
-    /* Health check */
+    /* ----- 1. Health check ----- */
     $('#healthForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var f = e.target.elements, msg = $('.form-msg', e.target);
@@ -247,31 +249,32 @@
       var maint = Math.round(bmr * +f.l.value), loss = Math.max(1200, maint - 450), gain = maint + 350;
       var iMin = Math.round(19.5 * hm * hm), iMax = Math.round(23.5 * hm * hm);
       var water = (w * 0.035).toFixed(1), prot = Math.round(w * (bmi >= 23 ? 1.1 : 1.0));
-      var html = '<div class="res-grid">' +
-        '<div class="res ' + tone + ' wide"><small>BMI</small><b>' + bmi + '</b><span>' + bi(sEn, sHi) + '</span></div>' +
-        '<div class="res"><small>' + bi('BMR (rest burn)', 'BMR (आराम कैलोरी)') + '</small><b>' + bmr + '</b><span>kcal</span></div>' +
-        '<div class="res"><small>' + bi('Ideal weight', 'आदर्श वजन') + '</small><b>' + iMin + '–' + iMax + '</b><span>kg</span></div>' +
-        '<div class="res"><small>' + bi('Maintain weight', 'वजन बनाए रखने के लिए') + '</small><b>' + maint + '</b><span>kcal/' + tr('day', 'दिन') + '</span></div>' +
-        '<div class="res"><small>' + bi('Fat loss', 'फैट लॉस') + '</small><b>' + loss + '</b><span>kcal/' + tr('day', 'दिन') + '</span></div>' +
-        '<div class="res"><small>' + bi('Healthy gain', 'स्वस्थ वजन बढ़ाने के लिए') + '</small><b>' + gain + '</b><span>kcal/' + tr('day', 'दिन') + '</span></div>' +
-        '<div class="res"><small>' + bi('Water', 'पानी') + '</small><b>' + water + ' L</b><span>' + bi('per day', 'प्रति दिन') + '</span></div>' +
-        '<div class="res"><small>' + bi('Protein', 'प्रोटीन') + '</small><b>' + prot + ' g</b><span>' + bi('per day', 'प्रति दिन') + '</span></div>';
+      var pos = Math.max(1, Math.min(99, (bmi - 15) / 20 * 100));
+      var day = bi('kcal / day', 'kcal / दिन');
+
+      var html = '<section class="st-card t-' + tone + '"><div class="bmi-top"><div class="bmi-val"><small>' + bi('Your BMI', 'आपका BMI') + '</small><b>' + bmi + '</b></div><span class="st-pill">' + bi(sEn, sHi) + '</span></div>' +
+        '<div class="gauge" role="img" aria-label="BMI scale"><i style="width:17.5%;background:#f0b429"></i><i style="width:22.5%;background:#2f9e5b"></i><i style="width:22.5%;background:#f08a24"></i><i style="width:37.5%;background:#d64545"></i><span class="gmark" style="left:' + pos + '%"></span></div>' +
+        '<div class="glabels"><span style="width:17.5%">&lt; 18.5<br>' + bi('Under', 'कम') + '</span><span style="width:22.5%">18.5 – 22.9<br>' + bi('Healthy', 'सही') + '</span><span style="width:22.5%">23 – 27.4<br>' + bi('Over', 'ज़्यादा') + '</span><span style="width:37.5%">27.5+<br>' + bi('High', 'अधिक') + '</span></div></section>' +
+        '<section class="st-card"><div class="st-card-h"><h2>' + bi('Daily calories', 'रोज़ की कैलोरी') + '</h2><p>' + bi('Based on your BMR and activity level.', 'आपके BMR और गतिविधि के आधार पर।') + '</p></div><div class="kpis k3">' +
+        kpi('Maintain weight', 'वजन बनाए रखें', maint, day) + kpi('Fat loss', 'फैट लॉस', loss, day) + kpi('Healthy gain', 'स्वस्थ वजन बढ़ाएं', gain, day) + '</div></section>' +
+        '<section class="st-card"><div class="st-card-h"><h2>' + bi('Body & nutrition targets', 'शरीर और पोषण लक्ष्य') + '</h2></div><div class="kpis k2">' +
+        kpi('BMR (rest burn)', 'BMR (आराम कैलोरी)', bmr, 'kcal') + kpi('Ideal weight', 'आदर्श वजन', iMin + '–' + iMax, 'kg') + kpi('Water', 'पानी', water, bi('litres / day', 'लीटर / दिन')) + kpi('Protein', 'प्रोटीन', prot, bi('g / day', 'g / दिन')) + '</div>';
       var waistLine = '';
       if (wc > 40) {
         var r = +(wc / h).toFixed(2), tn = r < .5 ? 'ok' : r < .58 ? 'warn' : 'alert';
-        var nE = r < .5 ? 'Healthy waist-to-height ratio (under 0.50).' : r < .58 ? 'Slightly high belly fat (0.50–0.57). Focus on lighter dinner and protein.' : 'High belly fat (0.58+). Starting a structured fat-loss plan is recommended.';
+        var nE = r < .5 ? 'Healthy waist-to-height ratio (under 0.50).' : r < .58 ? 'Slightly high belly fat (0.50–0.57). Focus on a lighter dinner and protein.' : 'High belly fat (0.58+). A structured fat-loss plan is recommended.';
         var nH = r < .5 ? 'स्वस्थ कमर-ऊंचाई अनुपात (0.50 से कम)।' : r < .58 ? 'पेट की चर्बी थोड़ी अधिक है (0.50–0.57)। डिनर हल्का और प्रोटीन-युक्त रखें।' : 'पेट की चर्बी काफी अधिक है (0.58+)। सही गाइडेंस के साथ फैट लॉस शुरू करें।';
-        html += '<div class="res ' + tn + ' wide"><small>' + bi('Waist-to-height ratio', 'कमर-ऊंचाई अनुपात') + '</small><b>' + r + '</b><span>' + bi(nE, nH) + '</span></div>';
+        html += '<div class="whtr t-' + tn + '"><div class="bmi-val"><small>' + bi('Waist-to-height ratio', 'कमर-ऊंचाई अनुपात') + '</small><b>' + r + '</b></div><p>' + bi(nE, nH) + '</p></div>';
         waistLine = '\nWaist-to-height ratio: ' + r;
       }
-      html += '</div><div class="note-box">' + bi('Want a food plan for these numbers? Talk to our coach for free.', 'इन नंबरों के हिसाब से डाइट प्लान चाहिए? हमारे कोच से मुफ्त बात करें।') +
-        ' <a class="more" href="' + BASE + 'book/">' + bi('Book Free Call →', 'फ्री कॉल बुक करें →') + '</a><p class="tiny">' + bi('For general awareness only. Not medical advice.', 'केवल सामान्य जानकारी के लिए। यह चिकित्सा सलाह नहीं है।') + '</p></div>';
+      html += '</section><div class="st-note"><p>' + bi('Want a food plan for these numbers?', 'इन नंबरों के हिसाब से डाइट प्लान चाहिए?') + '<small>' + bi('For general awareness only. Not medical advice.', 'केवल सामान्य जानकारी के लिए। यह चिकित्सा सलाह नहीं है।') + '</small></p>' +
+        '<a class="st-btn primary" href="' + BASE + 'book/">' + bi('Talk to a coach – free', 'कोच से बात करें – मुफ्त') + '</a></div>';
       $('#healthOut').innerHTML = html;
       lastHealth = 'HEALTH CHECK\nWeight ' + w + ' kg, height ' + h + ' cm, age ' + a + '\nBMI: ' + bmi + ' (' + sEn + ')\nBMR: ' + bmr + ' kcal\nIdeal weight: ' + iMin + '–' + iMax + ' kg\nMaintain: ' + maint + ' kcal/day | Fat loss: ' + loss + ' | Healthy gain: ' + gain +
         '\nWater: ' + water + ' L/day | Protein: ' + prot + ' g/day' + waistLine;
     });
 
-    /* Thali plate */
+    /* ----- 2. Thali plate ----- */
     var plate = {}, plateCat = 'all', plateQ = '';
     var saved = []; try { saved = JSON.parse(store.get('vw-plates') || '[]'); } catch (e) { saved = []; }
     function totals(entries) {
@@ -289,17 +292,19 @@
     function renderFoods() {
       chips($('#plateCats'), catList(), plateCat, function (v) { plateCat = v; renderFoods(); });
       var list = $('#foodList'); list.innerHTML = '';
-      FOODS.filter(function (f) {
+      var shown = FOODS.filter(function (f) {
         return (plateCat === 'all' || f.c === plateCat) && (!plateQ || (f.n + ' ' + f.h).toLowerCase().indexOf(plateQ) >= 0);
-      }).forEach(function (f) {
-        var d = document.createElement('div'); d.className = 'frow'; d.draggable = true;
-        d.innerHTML = art(f.id, 40) + '<div class="fn"><b>' + bi(f.n, f.h) + '</b><span>' + bi(f.s, f.sh) + ' · ' + f.k + ' kcal · P ' + f.p + 'g</span></div>';
-        var b = document.createElement('button'); b.type = 'button'; b.className = 'fadd'; b.innerHTML = '+ ' + bi('Add', 'जोड़ें');
+      });
+      shown.forEach(function (f) {
+        var d = document.createElement('div'); d.className = 'st-row'; d.draggable = true;
+        d.innerHTML = art(f.id, 40) + '<div class="n"><b>' + bi(f.n, f.h) + '</b><span>' + bi(f.s, f.sh) + ' · ' + f.k + ' kcal · P ' + f.p + 'g</span></div>';
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'st-add'; b.innerHTML = ico('plus') + bi('Add', 'जोड़ें');
         b.addEventListener('click', function () { addFood(f.id); });
         d.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', f.id); e.dataTransfer.effectAllowed = 'copy'; });
         d.appendChild(b); list.appendChild(d);
       });
-      if (!list.children.length) list.innerHTML = '<p class="muted">' + bi('No foods found.', 'कोई भोजन नहीं मिला।') + '</p>';
+      if (!shown.length) list.innerHTML = '<p class="st-none">' + bi('No foods found.', 'कोई भोजन नहीं मिला।') + '</p>';
+      $('#foodCount').innerHTML = bi('Showing ' + shown.length + ' of ' + FOODS.length + ' foods', FOODS.length + ' में से ' + shown.length + ' भोजन दिख रहे हैं');
     }
     $('#plateSearch').addEventListener('input', function (e) { plateQ = e.target.value.trim().toLowerCase(); renderFoods(); });
 
@@ -309,14 +314,14 @@
     drop.addEventListener('drop', function (e) { e.preventDefault(); drop.classList.remove('over'); var id = e.dataTransfer.getData('text/plain'); if (byId[id]) addFood(id); });
 
     function titem(f, q, size) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'titem';
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'st-titem';
       b.title = f.n + ' — ' + Math.round(f.k * q) + ' kcal (tap to add one more)';
-      b.innerHTML = '<span class="tw">' + art(f.id, size) + '<b class="tb">' + q + '×</b></span><span class="tl">' + esc(shortName(f)) + '</span>';
+      b.innerHTML = '<span class="st-tw">' + art(f.id, size) + '<b class="st-tb">' + q + '×</b></span><span class="st-tl">' + esc(shortName(f)) + '</span>';
       b.addEventListener('click', function () { addFood(f.id); });
       return b;
     }
     function row(list, size) {
-      var d = document.createElement('div'); d.className = 'trow';
+      var d = document.createElement('div'); d.className = 'st-trow';
       list.forEach(function (x) { d.appendChild(titem(x.f, x.q, size)); }); return d;
     }
     function renderPlate() {
@@ -329,28 +334,27 @@
       var dr = $('#thaliDrinks'); dr.innerHTML = '';
       drinks.forEach(function (x) { dr.appendChild(titem(x.f, x.q, 52)); });
       if (!items.length) {
-        inner.innerHTML = '<div class="thali-empty"><div class="ex">' + art('roti', 40) + art('moong-dal', 38) + art('steamed-rice', 40) + '</div>' + bi('Drop roti, rice, dal or sabzi here to build your thali.', 'अपनी थाली सजाने के लिए रोटी, चावल, दाल या सब्जी यहां डालें।') + '</div>';
+        inner.innerHTML = '<div class="st-thali-empty"><div class="ex">' + art('roti', 40) + art('moong-dal', 38) + art('steamed-rice', 40) + '</div>' + bi('Drop roti, rice, dal or sabzi here to build your thali.', 'अपनी थाली सजाने के लिए रोटी, चावल, दाल या सब्जी यहां डालें।') + '</div>';
       } else if (!katoris.length && !mains.length) {
-        inner.innerHTML = '<p class="thali-empty">' + bi('Drink placed beside the thali — now add roti, rice, dal or salad!', 'पेय थाली के पास रखा है — अब रोटी, चावल, दाल या सलाद जोड़ें!') + '</p>';
+        inner.innerHTML = '<p class="st-thali-empty">' + bi('Drink placed beside the thali — now add roti, rice, dal or salad!', 'पेय थाली के पास रखा है — अब रोटी, चावल, दाल या सलाद जोड़ें!') + '</p>';
       } else {
         if (katoris.length) inner.appendChild(row(katoris, katoris.length > 3 ? 52 : 60));
         if (mains.length) inner.appendChild(row(mains, mains.length > 3 ? 56 : 68));
       }
-      // quantity strip
       var strip = $('#qtyStrip'); strip.innerHTML = '';
       en.forEach(function (x) {
-        var f = byId[x.foodId], d = document.createElement('div'); d.className = 'pitem';
-        d.innerHTML = '<span class="fn">' + bi(f.n, f.h) + '</span><span class="qty"><button type="button" aria-label="Less">−</button><b>' + x.q + '</b><button type="button" aria-label="More">+</button></span>';
+        var f = byId[x.foodId], d = document.createElement('div'); d.className = 'st-qrow';
+        d.innerHTML = '<span class="nm">' + bi(f.n, f.h) + '</span><span class="st-step"><button type="button" aria-label="Less">' + ico('minus') + '</button><b>' + x.q + '</b><button type="button" aria-label="More">' + ico('plus') + '</button></span>';
         var bs = $$('button', d);
         bs[0].addEventListener('click', function () { plate[x.foodId]--; if (plate[x.foodId] <= 0) delete plate[x.foodId]; renderPlate(); });
         bs[1].addEventListener('click', function () { plate[x.foodId]++; renderPlate(); });
         strip.appendChild(d);
       });
       var t = totals(en);
-      $('#plateTotals').innerHTML = [['kcal', Math.round(t.k)], [tr('Protein', 'प्रोटीन'), r1(t.p) + 'g'], [tr('Carbs', 'कार्ब्स'), r1(t.cb) + 'g'], [tr('Fat', 'फैट'), r1(t.f) + 'g'], [tr('Fibre', 'फाइबर'), r1(t.fi) + 'g']]
-        .map(function (x) { return '<div><b>' + x[1] + '</b><small>' + x[0] + '</small></div>'; }).join('');
+      $('#plateTotals').innerHTML = [['k', Math.round(t.k), 'kcal'], ['', r1(t.p) + 'g', tr('Protein', 'प्रोटीन')], ['', r1(t.cb) + 'g', tr('Carbs', 'कार्ब्स')], ['', r1(t.f) + 'g', tr('Fat', 'फैट')], ['', r1(t.fi) + 'g', tr('Fibre', 'फाइबर')]]
+        .map(function (x) { return '<div class="st-tot ' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></div>'; }).join('');
       var v = $('#plateVerdict'), tips = [], cls = '', head;
-      if (!en.length) { v.className = 'verdict'; v.innerHTML = bi('Empty plate — add some Indian foods to begin.', 'खाली थाली — शुरू करने के लिए भोजन जोड़ें।'); return; }
+      if (!en.length) { v.className = 'st-verdict'; v.innerHTML = bi('Empty plate — add some Indian foods to begin.', 'खाली थाली — शुरू करने के लिए भोजन जोड़ें।'); return; }
       if (t.p < 18) tips.push(bi('Protein is low. Add grilled paneer, soya chunks, moong dal, sprouts or boiled eggs.', 'प्रोटीन कम है। पनीर, सोया चंक्स, मूंग दाल, स्प्राउट्स या उबले अंडे जोड़ें।'));
       if (t.fi < 7) tips.push(bi('Fibre is low. Add a full plate of cucumber-tomato salad or green sabzi.', 'फाइबर कम है। खीरा-टमाटर सलाद या हरी सब्जी ज़रूर जोड़ें।'));
       if (t.caution > 0) tips.push(bi('Includes fried, sugary, packaged or alcohol items. Swap for roasted chana, chaas or sprouts.', 'इसमें तला-भुना, मीठा, पैकेट वाला या शराब है। इसकी जगह छाछ, भुना चना या स्प्राउट्स लें।'));
@@ -358,46 +362,62 @@
       if (!tips.length) { cls = 'good'; head = bi('Well-balanced healthy Indian thali! Good protein, fibre and steady energy.', 'बहुत बढ़िया संतुलित भारतीय थाली! अच्छा प्रोटीन, फाइबर और सही कैलोरी।'); tips.push(bi('Drink a glass of water 25 minutes before this meal.', 'इस भोजन से 25 मिनट पहले 1 गिलास पानी पिएं।')); }
       else if (t.caution > 0 || t.k > 800) { cls = 'alert'; head = bi('Needs improvement — high empty calories or imbalance.', 'सुधार की ज़रूरत — कैलोरी या अनहेल्दी आइटम अधिक हैं।'); }
       else { cls = 'warn'; head = bi('Almost balanced — small tweaks will make it much healthier.', 'काफ़ी अच्छा — थोड़ा बदलाव इसे और सेहतमंद बना देगा।'); }
-      v.className = 'verdict ' + cls;
+      v.className = 'st-verdict ' + cls;
       v.innerHTML = '<strong>' + head + '</strong><ul>' + tips.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
     }
+    function flash(btn, text) { var old = btn.innerHTML; btn.innerHTML = '<span>' + esc(text) + '</span>'; setTimeout(function () { btn.innerHTML = old; }, 1400); }
     $('#clearPlate').addEventListener('click', function () { plate = {}; renderPlate(); });
     $('#savePlate').addEventListener('click', function () {
-      var en = entriesOf(plate); if (!en.length) return;
+      var en = entriesOf(plate); if (!en.length) { flash(this, tr('Add foods first', 'पहले भोजन जोड़ें')); return; }
       saved.push({ id: 's' + Date.now(), n: tr('My plate ', 'मेरी थाली ') + (saved.length + 1), e: en.map(function (x) { return { foodId: x.foodId, quantity: x.q }; }), saved: true });
-      store.set('vw-plates', JSON.stringify(saved)); renderSaved();
+      store.set('vw-plates', JSON.stringify(saved)); renderSaved(); flash(this, '✓ ' + tr('Saved', 'सेव हुआ'));
     });
+
+    /* compare */
     var picked = [];
     function plateEntries(p) { return p.e.map(function (x) { return { foodId: x.foodId, q: x.quantity }; }); }
     function renderSaved() {
-      chips($('#premadeList'), PREMADE.map(function (p) { return { v: p.id, l: '⬇ ' + esc(p.n) }; }), '', function (id) {
+      chips($('#premadeList'), PREMADE.map(function (p) { return { v: p.id, l: ico('plus') + esc(p.n) }; }), '', function (id) {
         var p = PREMADE.filter(function (x) { return x.id === id; })[0]; plate = {};
         p.e.forEach(function (x) { plate[x.foodId] = x.quantity; }); renderPlate(); $('#dropCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
       var all = PREMADE.concat(saved), box = $('#savedList'); box.innerHTML = '';
       all.forEach(function (p) {
-        var l = document.createElement('label');
-        l.innerHTML = '<input type="checkbox" value="' + p.id + '"' + (picked.indexOf(p.id) >= 0 ? ' checked' : '') + '> <span>' + esc(p.n) + (p.saved ? '' : ' <span class="badge-t">' + tr('Ready-made', 'तैयार') + '</span>') + '</span>';
+        var l = document.createElement('label'); l.className = 'st-cmpi' + (picked.indexOf(p.id) >= 0 ? ' on' : '');
+        l.innerHTML = '<input type="checkbox"' + (picked.indexOf(p.id) >= 0 ? ' checked' : '') + '><span class="nm">' + esc(p.n) + '</span>' + (p.saved ? '' : '<span class="st-tag">' + tr('Ready-made', 'तैयार') + '</span>');
         $('input', l).addEventListener('change', function (e) {
           if (e.target.checked) { picked.push(p.id); if (picked.length > 3) picked.shift(); } else picked = picked.filter(function (x) { return x !== p.id; });
           renderSaved();
         });
+        if (p.saved) {
+          var del = document.createElement('button'); del.type = 'button'; del.className = 'st-del'; del.title = tr('Delete', 'हटाएं'); del.setAttribute('aria-label', 'Delete'); del.innerHTML = ico('trash');
+          del.addEventListener('click', function (e) {
+            e.preventDefault(); e.stopPropagation();
+            saved = saved.filter(function (x) { return x.id !== p.id; }); picked = picked.filter(function (x) { return x !== p.id; });
+            store.set('vw-plates', JSON.stringify(saved)); renderSaved();
+          });
+          l.appendChild(del);
+        }
         box.appendChild(l);
       });
       renderCompare();
     }
     function renderCompare() {
-      var tb = $('#compareTable'), all = PREMADE.concat(saved), sel = picked.map(function (id) { return all.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
-      if (sel.length < 2) { tb.hidden = true; return; }
-      tb.hidden = false;
-      var rows = [['kcal', 'k'], [tr('Protein (g)', 'प्रोटीन (g)'), 'p'], [tr('Carbs (g)', 'कार्ब्स (g)'), 'cb'], [tr('Fat (g)', 'फैट (g)'), 'f'], [tr('Fibre (g)', 'फाइबर (g)'), 'fi']];
+      var wrap = $('#compareWrap'), tb = $('#compareTable'), all = PREMADE.concat(saved);
+      var sel = picked.map(function (id) { return all.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+      if (sel.length < 2) { wrap.hidden = true; return; }
+      wrap.hidden = false;
+      var rows = [['kcal', 'k', 'min'], [tr('Protein (g)', 'प्रोटीन (g)'), 'p', 'max'], [tr('Carbs (g)', 'कार्ब्स (g)'), 'cb', 'min'], [tr('Fat (g)', 'फैट (g)'), 'f', 'min'], [tr('Fibre (g)', 'फाइबर (g)'), 'fi', 'max']];
       var tt = sel.map(function (p) { return totals(plateEntries(p)); });
-      var h = '<thead><tr><th></th>' + sel.map(function (p) { return '<th>' + esc(p.n) + '</th>'; }).join('') + '</tr></thead><tbody>';
-      rows.forEach(function (r) { h += '<tr><td><b>' + r[0] + '</b></td>' + tt.map(function (t) { return '<td>' + r1(t[r[1]]) + '</td>'; }).join('') + '</tr>'; });
+      var h = '<thead><tr><th>' + bi('Per plate', 'प्रति थाली') + '</th>' + sel.map(function (p) { return '<th>' + esc(p.n) + '</th>'; }).join('') + '</tr></thead><tbody>';
+      rows.forEach(function (r) {
+        var vals = tt.map(function (t) { return r1(t[r[1]]); }), best = r[2] === 'max' ? Math.max.apply(null, vals) : Math.min.apply(null, vals);
+        h += '<tr><td>' + r[0] + '</td>' + vals.map(function (v) { return '<td' + (v === best ? ' class="best"' : '') + '>' + v + '</td>'; }).join('') + '</tr>';
+      });
       tb.innerHTML = h + '</tbody>';
     }
 
-    /* Food sheet */
+    /* ----- 3. Food sheet ----- */
     var sCat = 'all', sTag = '', sQ = '', sSort = 'n', sDir = 1;
     function renderSheet() {
       chips($('#sheetCats'), catList(), sCat, function (v) { sCat = v; renderSheet(); });
@@ -406,16 +426,17 @@
         return (sCat === 'all' || f.c === sCat) && (!sTag || f.t.indexOf(sTag) >= 0) && (!sQ || (f.n + ' ' + f.h).toLowerCase().indexOf(sQ) >= 0);
       }).sort(function (a, b) { var x = a[sSort], y = b[sSort]; return (typeof x === 'string' ? x.localeCompare(y) : x - y) * sDir; });
       $('#sheetTable tbody').innerHTML = list.map(function (f) {
-        return '<tr><td><div style="display:flex;gap:.6rem;align-items:center">' + art(f.id, 34) + '<div><b>' + bi(f.n, f.h) + '</b>' + (f.t.indexOf('caution') >= 0 ? '<span class="badge-t caution">' + tr('limit', 'सीमित') + '</span>' : '') + '<br><small class="muted">' + bi(f.s, f.sh) + '</small></div></div></td><td class="v-k">' + f.k + '</td><td class="v-p">' + f.p + '</td><td class="v-c">' + f.cb + '</td><td class="v-f">' + f.f + '</td><td class="v-fi">' + f.fi + '</td></tr>';
-      }).join('') || '<tr><td colspan="6">' + bi('No foods found.', 'कोई भोजन नहीं मिला।') + '</td></tr>';
+        return '<tr><td><div class="fcell">' + art(f.id, 36) + '<div><b>' + bi(f.n, f.h) + (f.t.indexOf('caution') >= 0 ? ' <span class="st-tag limit">' + tr('limit', 'सीमित') + '</span>' : '') + '</b><small>' + bi(f.s, f.sh) + '</small></div></div></td><td class="k">' + f.k + '</td><td class="p">' + f.p + '</td><td class="c">' + f.cb + '</td><td class="f">' + f.f + '</td><td class="fi">' + f.fi + '</td></tr>';
+      }).join('') || '<tr><td colspan="6" style="text-align:center;padding:2rem">' + bi('No foods found.', 'कोई भोजन नहीं मिला।') + '</td></tr>';
       $$('#sheetTable th').forEach(function (th) { th.classList.remove('asc', 'desc'); if (th.dataset.sort === sSort) th.classList.add(sDir > 0 ? 'asc' : 'desc'); });
+      $('#sheetCount').innerHTML = bi('Showing ' + list.length + ' of ' + FOODS.length + ' foods', FOODS.length + ' में से ' + list.length + ' भोजन दिख रहे हैं');
     }
     $$('#sheetTable th[data-sort]').forEach(function (th) {
       th.addEventListener('click', function () { if (sSort === th.dataset.sort) sDir = -sDir; else { sSort = th.dataset.sort; sDir = th.dataset.sort === 'n' ? 1 : -1; } renderSheet(); });
     });
     $('#sheetSearch').addEventListener('input', function (e) { sQ = e.target.value.trim().toLowerCase(); renderSheet(); });
 
-    /* Top actions: print, download, WhatsApp, copy */
+    /* ----- top actions: print, download, copy, WhatsApp ----- */
     function summaryText() {
       var parts = ['VEDIKA WELLNESS STUDIO – SUMMARY'];
       if (lastHealth) parts.push(lastHealth);
@@ -429,7 +450,6 @@
       parts.push('For general awareness only – not medical advice.\n' + location.href.split('#')[0]);
       return parts.join('\n\n');
     }
-    function flash(btn, text) { var old = btn.innerHTML; btn.textContent = text; setTimeout(function () { btn.innerHTML = old; }, 1400); }
     $('#actPrint').addEventListener('click', function () { window.print(); });
     $('#actDownload').addEventListener('click', function () {
       var blob = new Blob([summaryText()], { type: 'text/plain;charset=utf-8' }), a = document.createElement('a');
@@ -438,13 +458,13 @@
     });
     $('#actWa').addEventListener('click', function () { window.open('https://wa.me/?text=' + encodeURIComponent(summaryText()), '_blank', 'noopener'); });
     $('#actCopy').addEventListener('click', function () {
-      var btn = this, txt = summaryText();
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { flash(btn, '✓ ' + tr('Copied', 'कॉपी हुआ')); });
-      else { var ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); flash(btn, '✓ ' + tr('Copied', 'कॉपी हुआ')); } catch (e) { /* ignore */ } ta.remove(); }
+      var btn = this, txt = summaryText(), ok = function () { flash(btn, '✓ ' + tr('Copied', 'कॉपी हुआ')); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok);
+      else { var ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) { /* ignore */ } ta.remove(); }
     });
 
     renderFoods(); renderPlate(); renderSaved(); renderSheet();
-    $('#langBtn').addEventListener('click', function () { renderPlate(); renderSaved(); renderSheet(); });
+    $('#langBtn').addEventListener('click', function () { renderFoods(); renderPlate(); renderSaved(); renderSheet(); });
   }
 
   /* ---------- Posts & pages published from /admin/ ---------- */
