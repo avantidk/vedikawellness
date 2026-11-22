@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vedika Wellness | Ayurveda, Yoga & Holistic Healing</title>
-<meta name="description" content="Vedika Wellness – authentic Ayurveda, yoga, panchakarma and meditation rooted in Indian tradition for balance of mind, body and spirit.">
+<meta name="description" content="Vedika Wellness – authentic Ayurveda, yoga, panchakarma and meditation rooted in Indian tradition.">
 <meta name="theme-color" content="#7b1e2b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%B7%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <!-- Reusable SVG motifs -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -53,29 +52,21 @@
   </defs>
 </svg>
 
-<header class="site-header" id="top">
+<header class="site-header">
   <div class="container nav">
-    <a href="#top" class="brand" aria-label="Vedika Wellness home">
+    <a href="./" class="brand" aria-label="Vedika Wellness home">
       <svg class="brand-icon"><use href="#lotus"/></svg>
       <span><b>Vedika</b> Wellness<small>वेदिका आरोग्य</small></span>
     </a>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav id="menu" class="menu">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#doshas">Doshas</a>
-      <a href="#packages">Packages</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#book" class="btn btn-gold btn-sm">Book Now</a>
+      <a href="about/">About</a><a href="services/">Services</a><a href="doshas/">Doshas</a><a href="packages/">Packages</a><a href="reviews/">Reviews</a>
+      <a href="contact/" class="btn btn-gold btn-sm">Book Now</a>
     </nav>
   </div>
   <svg class="border-strip" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#border)"/></svg>
 </header>
-
 <main>
-<!-- HERO -->
 <section class="hero">
   <svg class="hero-mandala" aria-hidden="true"><use href="#mandala"/></svg>
   <div class="container hero-grid">
@@ -85,8 +76,8 @@
       <h1>Heal the <em>Ancient</em> Way,<br>Live the Modern Way</h1>
       <p class="lead">Vedika Wellness brings 5,000 years of Indian healing wisdom to your everyday life — personalised care for balance of body, mind and spirit.</p>
       <div class="cta-row">
-        <a href="#book" class="btn btn-gold">Book a Consultation</a>
-        <a href="#services" class="btn btn-ghost">Explore Services</a>
+        <a href="contact/" class="btn btn-gold">Book a Consultation</a>
+        <a href="services/" class="btn btn-ghost">Explore Services</a>
       </div>
       <ul class="trust">
         <li><b>15+</b> Years of practice</li>
@@ -101,10 +92,7 @@
       </div>
     </div>
   </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section">
+</section><section  class="section">
   <div class="container about-grid">
     <div class="about-visual reveal">
       <div class="frame">
@@ -124,14 +112,11 @@
       </ul>
     </div>
   </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services" class="section tinted">
+</section><section  class="section tinted">
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">What We Offer</p>
-      <h2 class="title">Our Healing Services</h2>
+      <h2 class="title">Our Healing Services</h2><p class="sub"><a class="more" href="services/">View all services →</a></p>
       <div class="divider"><svg><use href="#lotus"/></svg></div>
     </div>
     <div class="cards">
@@ -143,68 +128,7 @@
       <article class="card reveal"><div class="ico">🍛</div><h3>Sattvic Diet Coaching</h3><p>Seasonal, simple Indian meal plans and recipes tailored to your dosha and goals.</p></article>
     </div>
   </div>
-</section>
-
-<!-- DOSHAS -->
-<section id="doshas" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">Know Yourself</p>
-      <h2 class="title">The Three Doshas</h2>
-      <p class="sub">Tap a dosha to learn about its nature and how to balance it.</p>
-      <div class="divider"><svg><use href="#lotus"/></svg></div>
-    </div>
-    <div class="tabs" role="tablist">
-      <button role="tab" class="tab active" data-dosha="vata" aria-selected="true">Vata · वात</button>
-      <button role="tab" class="tab" data-dosha="pitta" aria-selected="false">Pitta · पित्त</button>
-      <button role="tab" class="tab" data-dosha="kapha" aria-selected="false">Kapha · कफ</button>
-    </div>
-    <div class="dosha-panel reveal" id="doshaPanel">
-      <div class="dosha-element" id="doshaEl">💨</div>
-      <div>
-        <h3 id="doshaName">Vata — Air & Space</h3>
-        <p id="doshaDesc"></p>
-        <p class="balance"><b>To balance:</b> <span id="doshaTip"></span></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PACKAGES -->
-<section id="packages" class="section maroon">
-  <div class="container">
-    <div class="section-head reveal light">
-      <p class="eyebrow">Wellness Journeys</p>
-      <h2 class="title">Choose Your Package</h2>
-      <div class="divider"><svg><use href="#lotus"/></svg></div>
-    </div>
-    <div class="pricing">
-      <article class="plan reveal">
-        <h3>Shanti</h3><p class="tag">Relax & Reset</p>
-        <p class="price"><small>₹</small>1,999</p>
-        <ul><li>Ayurvedic consultation</li><li>Abhyanga massage (60 min)</li><li>Herbal tea & diet chart</li></ul>
-        <a href="#book" class="btn btn-ghost-light">Select</a>
-      </article>
-      <article class="plan featured reveal">
-        <span class="badge">Most Popular</span>
-        <h3>Prana</h3><p class="tag">7-Day Rejuvenation</p>
-        <p class="price"><small>₹</small>14,999</p>
-        <ul><li>Daily yoga & pranayama</li><li>4 therapy sessions</li><li>Sattvic meals included</li><li>Follow-up consultation</li></ul>
-        <a href="#book" class="btn btn-gold">Select</a>
-      </article>
-      <article class="plan reveal">
-        <h3>Moksha</h3><p class="tag">Full Panchakarma</p>
-        <p class="price"><small>₹</small>34,999</p>
-        <ul><li>14-day guided detox</li><li>Complete five-fold therapy</li><li>Meditation & mantra</li><li>3-month diet support</li></ul>
-        <a href="#book" class="btn btn-ghost-light">Select</a>
-      </article>
-    </div>
-    <p class="note">Sample pricing. Custom plans available on request.</p>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section id="reviews" class="section">
+</section><section  class="section">
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">Kind Words</p>
@@ -220,50 +144,18 @@
       <div class="dots" id="dots"></div>
     </div>
   </div>
-</section>
-
-<!-- BOOKING -->
-<section id="book" class="section tinted">
-  <div class="container book-grid">
-    <div class="reveal">
-      <p class="eyebrow">Begin Your Journey</p>
-      <h2 class="title">Book a Consultation</h2>
-      <p>Share your details and we'll confirm your slot on WhatsApp.</p>
-      <ul class="contact">
-        <li>📍 <span>Wellness Lane, Jaipur, Rajasthan</span></li>
-        <li>📞 <a href="tel:+910000000000">+91 00000 00000</a></li>
-        <li>✉️ <a href="mailto:hello@vedikawellness.in">hello@vedikawellness.in</a></li>
-        <li>🕘 <span>Mon–Sat · 7:00 AM – 7:00 PM</span></li>
-      </ul>
-    </div>
-    <form class="form reveal" id="bookForm" novalidate>
-      <label>Full name<input name="name" required autocomplete="name" placeholder="Your name"></label>
-      <label>Phone<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+91"></label>
-      <label>Service
-        <select name="service">
-          <option>Ayurvedic Consultation</option><option>Yoga & Pranayama</option><option>Panchakarma</option>
-          <option>Abhyanga Massage</option><option>Meditation & Mantra</option><option>Sattvic Diet Coaching</option>
-        </select>
-      </label>
-      <label>Preferred date<input name="date" type="date"></label>
-      <button class="btn btn-gold btn-block" type="submit">Send on WhatsApp</button>
-      <p class="form-msg" id="formMsg" role="status"></p>
-    </form>
-  </div>
-</section>
+</section><section class="cta-band"><div class="container"><h2>Begin your journey to <em>swasthya</em> today</h2><p>Talk to our vaidyas and get a plan made just for you.</p><a href="contact/" class="btn btn-gold">Book a Consultation</a></div></section>
 </main>
-
 <footer class="footer">
   <svg class="border-strip" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#border)"/></svg>
   <div class="container foot">
     <div class="brand light"><svg class="brand-icon"><use href="#lotus"/></svg><span><b>Vedika</b> Wellness<small>वेदिका आरोग्य</small></span></div>
+    <nav class="foot-links"><a href="./">Home</a><a href="about/">About</a><a href="services/">Services</a><a href="doshas/">Doshas</a><a href="packages/">Packages</a><a href="reviews/">Reviews</a><a href="contact/">Contact</a></nav>
     <p class="mantra">ॐ सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः ॐ</p>
     <p class="copy">© <span id="yr"></span> Vedika Wellness. All rights reserved.</p>
   </div>
 </footer>
-
 <a class="wa-float" id="waFloat" href="https://wa.me/910000000000" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">💬</a>
-
 <script src="script.js"></script>
 </body>
 </html>

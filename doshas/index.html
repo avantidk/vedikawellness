@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Know Your Dosha | Vedika Wellness</title>
+<meta name="description" content="Learn about Vata, Pitta and Kapha and how to balance them.">
+<meta name="theme-color" content="#7b1e2b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%B7%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<!-- Reusable SVG motifs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="lotus" viewBox="0 0 100 60">
+      <g fill="currentColor">
+        <path d="M50 4C40 18 40 38 50 52 60 38 60 18 50 4Z"/>
+        <path d="M50 52C34 48 22 36 20 20 36 24 46 36 50 52Z" opacity=".85"/>
+        <path d="M50 52C66 48 78 36 80 20 64 24 54 36 50 52Z" opacity=".85"/>
+        <path d="M50 54C28 54 10 44 4 30 24 30 42 40 50 54Z" opacity=".65"/>
+        <path d="M50 54C72 54 90 44 96 30 76 30 58 40 50 54Z" opacity=".65"/>
+      </g>
+    </symbol>
+    <symbol id="mandala" viewBox="0 0 200 200">
+      <g fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="100" cy="100" r="96"/>
+        <circle cx="100" cy="100" r="82" stroke-dasharray="2 5"/>
+        <circle cx="100" cy="100" r="40"/>
+        <circle cx="100" cy="100" r="14" fill="currentColor" fill-opacity=".25"/>
+        <g id="petals">
+          <path d="M100 4C84 30 84 58 100 84 116 58 116 30 100 4Z"/>
+          <path d="M100 196C84 170 84 142 100 116 116 142 116 170 100 196Z"/>
+          <path d="M4 100C30 84 58 84 84 100 58 116 30 116 4 100Z"/>
+          <path d="M196 100C170 84 142 84 116 100 142 116 170 116 196 100Z"/>
+        </g>
+        <g transform="rotate(45 100 100)">
+          <path d="M100 18C88 40 88 62 100 80 112 62 112 40 100 18Z"/>
+          <path d="M100 182C88 160 88 138 100 120 112 138 112 160 100 182Z"/>
+          <path d="M18 100C40 88 62 88 80 100 62 112 40 112 18 100Z"/>
+          <path d="M182 100C160 88 138 88 120 100 138 112 160 112 182 100Z"/>
+        </g>
+      </g>
+    </symbol>
+    <pattern id="border" width="40" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 8 L10 0 L20 8 L10 16Z M20 8 L30 0 L40 8 L30 16Z" fill="none" stroke="#d9a441" stroke-width="1.2"/>
+      <circle cx="10" cy="8" r="2" fill="#d9a441"/><circle cx="30" cy="8" r="2" fill="#d9a441"/>
+    </pattern>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../" class="brand" aria-label="Vedika Wellness home">
+      <svg class="brand-icon"><use href="#lotus"/></svg>
+      <span><b>Vedika</b> Wellness<small>वेदिका आरोग्य</small></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav id="menu" class="menu">
+      <a href="../about/">About</a><a href="../services/">Services</a><a href="../doshas/" class="active" aria-current="page">Doshas</a><a href="../packages/">Packages</a><a href="../reviews/">Reviews</a>
+      <a href="../contact/" class="btn btn-gold btn-sm">Book Now</a>
+    </nav>
+  </div>
+  <svg class="border-strip" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#border)"/></svg>
+</header>
+<main>
+<section class="page-hero"><svg class="ph-mandala" aria-hidden="true"><use href="#mandala"/></svg><div class="container"><p class="eyebrow">Know Yourself</p><h1>The Three Doshas</h1><p>Understand your prakriti, the key to personalised healing.</p></div></section><section id="doshas" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      
+      <p class="sub">Tap a dosha to learn about its nature and how to balance it.</p>
+      
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab active" data-dosha="vata" aria-selected="true">Vata · वात</button>
+      <button role="tab" class="tab" data-dosha="pitta" aria-selected="false">Pitta · पित्त</button>
+      <button role="tab" class="tab" data-dosha="kapha" aria-selected="false">Kapha · कफ</button>
+    </div>
+    <div class="dosha-panel reveal" id="doshaPanel">
+      <div class="dosha-element" id="doshaEl">💨</div>
+      <div>
+        <h3 id="doshaName">Vata — Air & Space</h3>
+        <p id="doshaDesc"></p>
+        <p class="balance"><b>To balance:</b> <span id="doshaTip"></span></p>
+      </div>
+    </div>
+  </div>
+</section><section class="cta-band"><div class="container"><h2>Begin your journey to <em>swasthya</em> today</h2><p>Talk to our vaidyas and get a plan made just for you.</p><a href="../contact/" class="btn btn-gold">Book a Consultation</a></div></section>
+</main>
+<footer class="footer">
+  <svg class="border-strip" width="100%" height="16" aria-hidden="true"><rect width="100%" height="16" fill="url(#border)"/></svg>
+  <div class="container foot">
+    <div class="brand light"><svg class="brand-icon"><use href="#lotus"/></svg><span><b>Vedika</b> Wellness<small>वेदिका आरोग्य</small></span></div>
+    <nav class="foot-links"><a href="../">Home</a><a href="../about/">About</a><a href="../services/">Services</a><a href="../doshas/" class="active" aria-current="page">Doshas</a><a href="../packages/">Packages</a><a href="../reviews/">Reviews</a><a href="../contact/">Contact</a></nav>
+    <p class="mantra">ॐ सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः ॐ</p>
+    <p class="copy">© <span id="yr"></span> Vedika Wellness. All rights reserved.</p>
+  </div>
+</footer>
+<a class="wa-float" id="waFloat" href="https://wa.me/910000000000" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">💬</a>
+<script src="../script.js"></script>
+</body>
+</html>

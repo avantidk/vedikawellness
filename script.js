@@ -46,8 +46,10 @@
       t.setAttribute('aria-selected', on);
     });
   }
-  $$('.tab').forEach(function (t) { t.addEventListener('click', function () { showDosha(t.dataset.dosha); }); });
-  showDosha('vata');
+  if ($('#doshaPanel')) {
+    $$('.tab').forEach(function (t) { t.addEventListener('click', function () { showDosha(t.dataset.dosha); }); });
+    showDosha('vata');
+  }
 
   // Testimonial slider
   var slides = $$('.slide'), dots = $('#dots'), cur = 0, timer;
@@ -63,12 +65,13 @@
     $$('button', dots).forEach(function (b, n) { b.classList.toggle('on', n === i); });
   }
   function start() { clearInterval(timer); timer = setInterval(function () { go((cur + 1) % slides.length); }, 5500); }
-  go(0); start();
+  if (slides.length) { go(0); start(); }
 
   // Booking form -> WhatsApp
   var WA = '910000000000'; // TODO: replace with the real WhatsApp number (country code + number)
   $('#waFloat').href = 'https://wa.me/' + WA;
-  $('#bookForm').addEventListener('submit', function (e) {
+  var form = $('#bookForm');
+  if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target, msg = $('#formMsg');
     if (!f.name.value.trim() || f.phone.value.replace(/\D/g, '').length < 10) {
