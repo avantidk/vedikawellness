@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nutrition & Diet Plans | Vedika Wellness</title>
+<meta name="description" content="Goal-based diet plans, superfoods and a free BMI calculator.">
+<meta name="theme-color" content="#1f7a4d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%97%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="leaf" viewBox="0 0 24 24"><path fill="currentColor" d="M20.6 3.4C11 3.2 4 8.3 4 16.4c0 1.6.3 2.9.9 3.9l1.5-1.4c-.2-.7-.3-1.5-.2-2.4 1-.2 3.2-.5 5.3-1.6 4.4-2.3 6.8-6.3 8.4-8.6-1.7 1.8-4.5 4.2-8.7 6.1-1.3.6-2.5.9-3.1 1 .6-3.6 4.2-8.8 12.5-8.3z"/></symbol>
+</defs></svg>
+<header class="site-header">
+  <div class="container nav">
+    <a href="../" class="brand" aria-label="Vedika Wellness home"><span class="logo"><svg><use href="#leaf"/></svg></span><span class="brand-text">Vedika<b>Wellness</b></span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <nav id="menu" class="menu">
+      <a href="../about/">About</a><a href="../services/">Services</a><a href="../nutrition/" class="active" aria-current="page">Nutrition</a><a href="../packages/">Packages</a><a href="../reviews/">Reviews</a>
+      <a href="../contact/" class="btn btn-primary btn-sm">Book Free Call</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="page-hero"><div class="blob b1"></div><div class="blob b2"></div><div class="container"><p class="eyebrow">Nutrition</p><h1>Fuel your body right</h1><p>Goal-based plans, superfoods and a quick BMI check.</p></div></section><section class="section "><div class="container">
+<div class="section-head reveal"><p class="eyebrow">Diet Plans by Goal</p><h2 class="title">Find Your Focus</h2><p class="sub">Tap a goal to see how we approach it.</p></div>
+<div class="tabs" role="tablist">
+<button role="tab" class="tab active" data-goal="weight" aria-selected="true">⚖️ Weight Loss</button>
+<button role="tab" class="tab" data-goal="gut" aria-selected="false">🫶 Gut Health</button>
+<button role="tab" class="tab" data-goal="energy" aria-selected="false">⚡ Energy &amp; Immunity</button>
+</div>
+<div class="goal-panel reveal" id="goalPanel"><div class="goal-emoji" id="goalEmoji">⚖️</div><div>
+<h3 id="goalName"></h3><p id="goalDesc"></p>
+<div class="meal-grid" id="goalMeals"></div></div></div></div></section><section class="section mint"><div class="container"><div class="section-head reveal"><p class="eyebrow">Superfoods</p><h2 class="title">Everyday Indian foods we love</h2></div><div class="foods">
+<div class="food reveal"><span>🌾</span><h4>Ragi &amp; Millets</h4><p>Rich in calcium and fibre; keep you full longer.</p></div>
+<div class="food reveal"><span>🫘</span><h4>Moong &amp; Dals</h4><p>Plant protein that is light and easy to digest.</p></div>
+<div class="food reveal"><span>🥛</span><h4>Curd &amp; Buttermilk</h4><p>Natural probiotics for a happy gut.</p></div>
+<div class="food reveal"><span>🟡</span><h4>Turmeric</h4><p>Curcumin supports a healthy inflammation response.</p></div>
+<div class="food reveal"><span>🍋</span><h4>Amla &amp; Citrus</h4><p>Loaded with vitamin C for immunity and skin.</p></div>
+<div class="food reveal"><span>🥜</span><h4>Nuts &amp; Seeds</h4><p>Healthy fats, magnesium and steady energy.</p></div>
+</div></div></section><section class="section "><div class="container bmi-wrap">
+<div class="reveal"><p class="eyebrow">Quick Check</p><h2 class="title">BMI Calculator</h2><p>A simple screening tool to see where you stand. Remember: BMI doesn't tell the whole story — a nutritionist can look at your complete picture.</p></div>
+<form class="form reveal" id="bmiForm" novalidate>
+<label>Height (cm)<input name="h" type="number" inputmode="decimal" min="100" max="250" placeholder="e.g. 165" required></label>
+<label>Weight (kg)<input name="w" type="number" inputmode="decimal" min="25" max="300" placeholder="e.g. 62" required></label>
+<button class="btn btn-primary btn-block" type="submit">Calculate</button>
+<div class="bmi-result" id="bmiResult" role="status"></div>
+</form></div></section><section class="cta-band"><div class="container reveal"><h2>Ready to feel your best?</h2><p>Book a free 15-minute call with our nutritionist and get a plan made for you.</p><a href="../contact/" class="btn btn-orange">Book Free Call</a></div></section>
+</main>
+<footer class="footer">
+  <div class="container foot-grid">
+    <div>
+      <a href="../" class="brand light"><span class="logo"><svg><use href="#leaf"/></svg></span><span class="brand-text">Vedika<b>Wellness</b></span></a>
+      <p class="foot-about">Personalised nutrition, fitness and holistic care for a healthier, happier you.</p>
+    </div>
+    <div><h4>Explore</h4><a href="../">Home</a><a href="../about/">About</a><a href="../services/">Services</a><a href="../nutrition/" class="active" aria-current="page">Nutrition</a><a href="../packages/">Packages</a><a href="../reviews/">Reviews</a></div>
+    <div><h4>Contact</h4><a href="../contact/">Book a consultation</a><a href="tel:+910000000000">+91 00000 00000</a><a href="mailto:hello@vedikawellness.in">hello@vedikawellness.in</a><span>Mon–Sat · 8 AM – 7 PM</span></div>
+  </div>
+  <p class="copy">© <span id="yr"></span> Vedika Wellness. This website offers general wellness information, not medical advice.</p>
+</footer>
+<a class="wa-float" id="waFloat" href="https://wa.me/910000000000" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">💬</a>
+<script src="../script.js"></script>
+</body>
+</html>

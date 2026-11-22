@@ -22,50 +22,75 @@
     items.forEach(function (el) { io.observe(el); });
   } else { items.forEach(function (el) { el.classList.add('in'); }); }
 
-  // Doshas
-  var doshas = {
-    vata: { icon: '💨', name: 'Vata — Air & Space',
-      desc: 'Creative, quick and energetic. When balanced you are lively and flexible; when out of balance you may feel anxious, dry, cold or have irregular sleep and digestion.',
-      tip: 'warm cooked meals, sesame-oil abhyanga, fixed routine, gentle yoga and early bedtime.' },
-    pitta: { icon: '🔥', name: 'Pitta — Fire & Water',
-      desc: 'Sharp, focused and driven. In balance you are confident and a natural leader; out of balance you may experience irritability, acidity, inflammation or burnout.',
-      tip: 'cooling foods like coconut and cucumber, moonlight walks, coconut-oil massage and calming pranayama.' },
-    kapha: { icon: '🌊', name: 'Kapha — Earth & Water',
-      desc: 'Calm, steady and nurturing. In balance you are loyal and strong; out of balance you may feel sluggish, heavy, or gain weight and congestion easily.',
-      tip: 'light spicy food, ginger tea, vigorous exercise, dry-brush massage and waking early.' }
+  // Diet goals
+  var goals = {
+    weight: { icon: '⚖️', name: 'Weight Loss',
+      desc: 'Lose fat steadily without starving. We build a calorie-aware plan around roti, dal, sabzi and curd, with protein at every meal and a daily walk.',
+      meals: [['Breakfast', 'Vegetable besan chilla + mint chutney'], ['Lunch', '1–2 roti, dal, big salad, sabzi'], ['Dinner', 'Moong khichdi or grilled paneer + soup']] },
+    gut: { icon: '🫶', name: 'Gut Health',
+      desc: 'Calm bloating and acidity with fibre-rich foods, natural probiotics and regular meal timing. Fewer triggers, more comfort.',
+      meals: [['Morning', 'Warm water with jeera + soaked methi'], ['Lunch', 'Curd rice, lauki sabzi, cucumber salad'], ['Evening', 'Buttermilk + roasted makhana']] },
+    energy: { icon: '⚡', name: 'Energy & Immunity',
+      desc: 'Beat fatigue with balanced iron, vitamin C and healthy fats, plus better sleep and hydration habits.',
+      meals: [['Breakfast', 'Ragi porridge with nuts and banana'], ['Lunch', 'Rajma, brown rice, amla chutney'], ['Snack', 'Fruit bowl + pumpkin seeds']] }
   };
-  function showDosha(k) {
-    var d = doshas[k];
-    $('#doshaEl').textContent = d.icon;
-    $('#doshaName').textContent = d.name;
-    $('#doshaDesc').textContent = d.desc;
-    $('#doshaTip').textContent = d.tip;
+  function showGoal(k) {
+    var g = goals[k];
+    $('#goalEmoji').textContent = g.icon;
+    $('#goalName').textContent = g.name;
+    $('#goalDesc').textContent = g.desc;
+    var box = $('#goalMeals');
+    box.innerHTML = '';
+    g.meals.forEach(function (m) {
+      var d = document.createElement('div');
+      d.className = 'meal';
+      var b = document.createElement('b'); b.textContent = m[0];
+      d.appendChild(b); d.appendChild(document.createTextNode(m[1]));
+      box.appendChild(d);
+    });
     $$('.tab').forEach(function (t) {
-      var on = t.dataset.dosha === k;
+      var on = t.dataset.goal === k;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on);
     });
   }
-  if ($('#doshaPanel')) {
-    $$('.tab').forEach(function (t) { t.addEventListener('click', function () { showDosha(t.dataset.dosha); }); });
-    showDosha('vata');
+  if ($('#goalPanel')) {
+    $$('.tab').forEach(function (t) { t.addEventListener('click', function () { showGoal(t.dataset.goal); }); });
+    showGoal('weight');
   }
+
+  // BMI calculator
+  var bmi = $('#bmiForm');
+  if (bmi) bmi.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var h = parseFloat(bmi.h.value) / 100, w = parseFloat(bmi.w.value), out = $('#bmiResult');
+    if (!(h > 1 && w > 20)) { out.className = 'bmi-result warn'; out.textContent = 'Please enter a valid height and weight.'; return; }
+    var v = w / (h * h), cat, cls = 'ok';
+    if (v < 18.5) { cat = 'Underweight'; cls = 'warn'; }
+    else if (v < 23) cat = 'Healthy range';
+    else if (v < 27.5) { cat = 'Overweight'; cls = 'warn'; }
+    else { cat = 'Obese range'; cls = 'warn'; }
+    out.className = 'bmi-result ' + cls;
+    out.innerHTML = '<span class="num">' + v.toFixed(1) + '</span>' + cat + '<small>Based on Asian BMI cut-offs. Talk to our nutritionist for personal advice.</small>';
+  });
 
   // Testimonial slider
   var slides = $$('.slide'), dots = $('#dots'), cur = 0, timer;
-  slides.forEach(function (_, i) {
-    var b = document.createElement('button');
-    b.setAttribute('aria-label', 'Show review ' + (i + 1));
-    b.addEventListener('click', function () { go(i); start(); });
-    dots.appendChild(b);
-  });
-  function go(i) {
-    cur = i;
-    slides.forEach(function (s, n) { s.classList.toggle('active', n === i); });
-    $$('button', dots).forEach(function (b, n) { b.classList.toggle('on', n === i); });
+  if (slides.length && dots) {
+    slides.forEach(function (_, i) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Show review ' + (i + 1));
+      b.addEventListener('click', function () { go(i); start(); });
+      dots.appendChild(b);
+    });
+    var go = function (i) {
+      cur = i;
+      slides.forEach(function (s, n) { s.classList.toggle('active', n === i); });
+      $$('button', dots).forEach(function (b, n) { b.classList.toggle('on', n === i); });
+    };
+    var start = function () { clearInterval(timer); timer = setInterval(function () { go((cur + 1) % slides.length); }, 5500); };
+    go(0); start();
   }
-  function start() { clearInterval(timer); timer = setInterval(function () { go((cur + 1) % slides.length); }, 5500); }
-  if (slides.length) { go(0); start(); }
 
   // Booking form -> WhatsApp
   var WA = '910000000000'; // TODO: replace with the real WhatsApp number (country code + number)
@@ -79,7 +104,7 @@
       return;
     }
     msg.textContent = '';
-    var text = 'Namaste! I would like to book *' + f.service.value + '*.\nName: ' + f.name.value.trim() +
+    var text = 'Hello! I would like to book a consultation for *' + f.service.value + '*.\nName: ' + f.name.value.trim() +
       '\nPhone: ' + f.phone.value.trim() + (f.date.value ? '\nPreferred date: ' + f.date.value : '');
     window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
