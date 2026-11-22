@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin | Vedika Wellness</title>
+<link rel="icon" type="image/webp" href="../img/logo-badge.webp">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- Connect screen -->
+<section id="viewConnect" class="connect" hidden>
+  <div class="connect-card">
+    <img src="../img/logo-horizontal.webp" width="168" height="58" alt="Vedika Wellness">
+    <h1>Admin login</h1>
+    <p class="muted">Connect this dashboard to your GitHub repository once. It publishes by saving files to your repo, so no server is needed.</p>
+    <form id="connectForm" autocomplete="off">
+      <label>GitHub access token
+        <input id="cToken" type="password" placeholder="github_pat_…" required autocomplete="off">
+      </label>
+      <label>Repository
+        <input id="cRepo" type="text" value="avantidk/vedikawellness" required>
+      </label>
+      <label>Branch
+        <input id="cBranch" type="text" value="main" required>
+      </label>
+      <button class="btn primary block" type="submit">Connect</button>
+      <p id="connectMsg" class="msg" role="status"></p>
+    </form>
+    <details class="help">
+      <summary>How do I get a token? (one-time, 2 minutes)</summary>
+      <ol>
+        <li>On GitHub open <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>.</li>
+        <li>Give it any name, set an expiry (e.g. 1 year).</li>
+        <li><b>Repository access</b> → <i>Only select repositories</i> → choose <code>vedikawellness</code>.</li>
+        <li><b>Permissions → Repository permissions → Contents → Read and write</b>.</li>
+        <li>Generate, copy the token and paste it above.</li>
+      </ol>
+      <p class="muted">The token stays only in this browser. Use <b>Log out</b> on shared computers. Anyone who opens this page without the token can do nothing.</p>
+    </details>
+  </div>
+</section>
+
+<!-- App -->
+<div id="app" class="app" hidden>
+  <header class="ad-top">
+    <a class="ad-brand" href="./"><img src="../img/logo-badge.webp" width="34" height="34" alt=""><span>Vedika <b>Admin</b></span></a>
+    <div class="ad-top-r"><span id="repoLabel" class="muted"></span><a class="btn ghost sm" href="../" target="_blank" rel="noopener">View site ↗</a><button class="btn ghost sm" id="logout" type="button">Log out</button></div>
+  </header>
+  <div class="ad-body">
+    <nav class="ad-nav" id="adNav" aria-label="Admin">
+      <button data-view="dash" class="on">📋 <span>Dashboard</span></button>
+      <button data-view="post">✍️ <span>New post</span></button>
+      <button data-view="page">📄 <span>New page</span></button>
+    </nav>
+    <main class="ad-main">
+
+      <!-- Dashboard -->
+      <section id="viewDash" class="view">
+        <div class="head"><h1>Dashboard</h1><div class="head-btns"><button class="btn primary" data-go="post" type="button">+ New post</button><button class="btn" data-go="page" type="button">+ New page</button></div></div>
+        <p class="notice">Changes go live on the website about <b>1–2 minutes</b> after you publish or delete.</p>
+        <div class="panel"><h2>Posts <span class="count" id="postCount"></span></h2><div id="postList" class="list"></div>
+          <p class="muted small">The 5 original blog posts are built into the site and are not listed here. Posts you create here appear at the top of the Blog page and Home page.</p></div>
+        <div class="panel"><h2>Pages <span class="count" id="pageCount"></span></h2><div id="pageList" class="list"></div></div>
+      </section>
+
+      <!-- Post editor -->
+      <section id="viewPost" class="view" hidden>
+        <div class="head"><h1 id="postHeading">New post</h1></div>
+        <form id="formPost" class="panel editor" novalidate>
+          <label>Title *<input name="title" required placeholder="e.g. 5 easy high-protein Indian snacks"></label>
+          <div class="row2">
+            <label>URL name (slug)<input name="slug" placeholder="auto from title"><small class="muted">Page URL: <span id="postUrl">…/blog/your-title/</span></small></label>
+            <label>Category<input name="category" list="cats" placeholder="Food Basics" value="Health Tips"><datalist id="cats"><option>Food Basics</option><option>Daily Habits</option><option>Weight Management</option><option>Recipes</option><option>Health Tips</option></datalist></label>
+          </div>
+          <label>Short summary (shown on cards and Google)<textarea name="excerpt" rows="2" maxlength="220" placeholder="One or two simple sentences"></textarea></label>
+          <label>Featured image <small class="muted">(optional – resized and converted to a light WebP automatically)</small>
+            <input type="file" name="image" accept="image/*"></label>
+          <div id="postImgPrev" class="img-prev" hidden><img alt="" id="postImgEl"><button type="button" class="btn ghost sm" id="postImgRemove">Remove image</button></div>
+          <label>Content *</label>
+          <div class="toolbar" data-for="postBody"></div>
+          <textarea name="body" id="postBody" rows="16" required placeholder="Write here. Use a blank line between paragraphs.&#10;&#10;## A heading&#10;&#10;- bullet one&#10;- bullet two"></textarea>
+          <details class="help"><summary>Formatting help</summary><p class="small"><code>## Heading</code> · <code>### Smaller heading</code> · <code>**bold**</code> · <code>*italic*</code> · <code>- list item</code> · <code>&gt; quote</code> · <code>[link text](https://…)</code> · blank line = new paragraph. Hindi text works too.</p></details>
+          <div class="row-btns"><button class="btn" type="button" data-preview="post">👁 Preview</button><button class="btn primary" type="submit">Publish post</button><button class="btn ghost" type="button" data-go="dash">Cancel</button></div>
+          <div id="postPreview" class="preview" hidden></div>
+          <p class="msg" id="postMsg" role="status"></p>
+        </form>
+      </section>
+
+      <!-- Page editor -->
+      <section id="viewPage" class="view" hidden>
+        <div class="head"><h1 id="pageHeading">New page</h1></div>
+        <form id="formPage" class="panel editor" novalidate>
+          <label>Page title *<input name="title" required placeholder="e.g. Privacy Policy"></label>
+          <div class="row2">
+            <label>URL name (slug)<input name="slug" placeholder="auto from title"><small class="muted">Page URL: <span id="pageUrl">…/your-title/</span></small></label>
+            <label class="check"><input type="checkbox" name="menu"> Show in the top menu</label>
+          </div>
+          <label>Content *</label>
+          <div class="toolbar" data-for="pageBody"></div>
+          <textarea name="body" id="pageBody" rows="16" required placeholder="Write the page content here…"></textarea>
+          <div class="row-btns"><button class="btn" type="button" data-preview="page">👁 Preview</button><button class="btn primary" type="submit">Publish page</button><button class="btn ghost" type="button" data-go="dash">Cancel</button></div>
+          <div id="pagePreview" class="preview" hidden></div>
+          <p class="msg" id="pageMsg" role="status"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="inlineImg" accept="image/*" hidden>
+<script src="admin.js"></script>
+</body>
+</html>
