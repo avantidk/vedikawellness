@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Vedika Wellness admin dashboard – private.">
 <title>Admin | Vedika Wellness</title>
 <link rel="icon" type="image/webp" href="../img/logo-badge.webp">
 <link rel="stylesheet" href="admin.css">
@@ -75,7 +76,7 @@
             <label>URL name (slug)<input name="slug" placeholder="auto from title"><small class="muted">Page URL: <span id="postUrl">…/blog/your-title/</span></small></label>
             <label>Category<input name="category" list="cats" placeholder="Food Basics" value="Health Tips"><datalist id="cats"><option>Food Basics</option><option>Daily Habits</option><option>Weight Management</option><option>Recipes</option><option>Health Tips</option></datalist></label>
           </div>
-          <label>Short summary (shown on cards and Google)<textarea name="excerpt" rows="2" maxlength="220" placeholder="One or two simple sentences"></textarea></label>
+          <label>Short summary (shown on cards and Google)<textarea name="excerpt" rows="2" maxlength="160" placeholder="One or two simple sentences (max 160 characters)"></textarea></label>
           <label>Featured image <small class="muted">(optional – resized and converted to a light WebP automatically)</small>
             <input type="file" name="image" accept="image/*"></label>
           <div id="postImgPrev" class="img-prev" hidden><img alt="" id="postImgEl"><button type="button" class="btn ghost sm" id="postImgRemove">Remove image</button></div>

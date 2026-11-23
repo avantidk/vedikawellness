@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Wellness Studio | Free BMI, BMR &amp; Indian Thali Calorie Calculator | Vedika Wellness</title>
-<meta name="description" content="Free tools: check BMI, BMR and ideal weight, build an Indian thali and see calories, protein, carbs, fat and fibre, compare plates, and browse a high-protein high-fibre food sheet.">
+<title>Wellness Studio: BMI, BMR &amp; Thali Calculator | Vedika</title>
+<meta name="description" content="Free BMI, BMR and ideal weight check, an interactive Indian thali calorie calculator, plate comparison and a high-protein, high-fibre food sheet.">
 <link rel="canonical" href="https://avantidk.github.io/vedikawellness/studio/">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Vedika Health &amp; Wellness">
-<meta property="og:title" content="Wellness Studio | Free BMI, BMR &amp; Indian Thali Calorie Calculator | Vedika Wellness"><meta property="og:description" content="Free tools: check BMI, BMR and ideal weight, build an Indian thali and see calories, protein, carbs, fat and fibre, compare plates, and browse a high-protein high-fibre food sheet.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Vedika Health &amp; Wellness"><meta property="og:locale" content="en_IN"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Wellness Studio: BMI, BMR &amp; Thali Calculator | Vedika"><meta property="og:description" content="Free BMI, BMR and ideal weight check, an interactive Indian thali calorie calculator, plate comparison and a high-protein, high-fibre food sheet.">
 <meta property="og:url" content="https://avantidk.github.io/vedikawellness/studio/"><meta property="og:image" content="https://avantidk.github.io/vedikawellness/img/poster-know-your-body.webp">
 <meta name="theme-color" content="#2f7a35">
 <link rel="icon" type="image/webp" href="../img/logo-badge.webp">
 <script>try{var d=document.documentElement,t=localStorage.getItem('vw-theme'),l=localStorage.getItem('vw-lang');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)t='dark';d.dataset.theme=t||'light';d.dataset.lang=l||'en';if(l==='hi')d.lang='hi'}catch(e){}</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
@@ -34,7 +35,7 @@
 <symbol id="sun" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="4.500"/><path d="M11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.200 5.600l1.400-1.400 2.100 2.100-1.400 1.400zM16.300 17.700l1.400-1.400 2.100 2.100-1.400 1.400zM4.200 18.400l2.100-2.100 1.400 1.400-2.100 2.100zM16.300 6.300l2.100-2.100 1.400 1.400-2.100 2.100z"/></g></symbol>
 </defs></svg>
 <a class="skip" href="#main">Skip to content</a>
-<div class="topbar"><div class="container topbar-in">
+<div class="topbar" role="region" aria-label="Contact information"><div class="container topbar-in">
   <div class="tb-left"><a href="tel:+918193989452">📞 +91 81939 89452</a><a href="mailto:vedikawellness01@gmail.com">✉️ vedikawellness01@gmail.com</a></div>
   <div class="tb-right"><span class="tb-note"><span class="en">🎁 3-Day Free Demo available</span><span class="hi" lang="hi">🎁 3-दिन का फ्री डेमो उपलब्ध</span></span><a href="https://www.youtube.com/@VedikaHealthandWellness" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/VedikaHealthandWellness" target="_blank" rel="noopener">Instagram</a><a href="https://www.fb.com/VedikaHealthandWellness" target="_blank" rel="noopener">Facebook</a></div>
 </div></div>
@@ -46,7 +47,7 @@
       <a href="../book/" class="btn btn-primary mobile-cta"><span class="en">Book Free Call</span><span class="hi" lang="hi">फ्री कॉल बुक करें</span></a>
     </nav>
     <div class="actions">
-      <button class="tool" id="langBtn" type="button" aria-label="Change language"><span class="en">हिंदी</span><span class="hi" lang="hi">EN</span></button>
+      <button class="tool" id="langBtn" type="button"><span class="en">हिंदी</span><span class="hi" lang="hi">EN</span><span class="sr-only"> – Change language / भाषा बदलें</span></button>
       <button class="tool" id="themeBtn" type="button" aria-label="Switch light or dark theme"><svg class="i-moon"><use href="#moon"/></svg><svg class="i-sun"><use href="#sun"/></svg></button>
       <a href="../book/" class="btn btn-primary btn-sm desk-cta cta-pulse"><span class="en">Book Free Call</span><span class="hi" lang="hi">फ्री कॉल बुक करें</span></a>
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
@@ -146,19 +147,19 @@
 <footer class="footer">
   <div class="container foot-grid">
     <div>
-      <a href="../" class="brand"><img class="foot-logo" src="../img/logo-horizontal.webp" width="168" height="58" alt="Vedika Health &amp; Wellness" loading="lazy"></a>
+      <a href="../" class="brand" aria-label="Vedika Health &amp; Wellness – home"><img class="foot-logo" src="../img/logo-horizontal.webp" width="168" height="58" alt="Vedika Health &amp; Wellness" loading="lazy"></a>
       <p class="foot-about"><span class="en">Simple, science-backed Indian nutrition coaching for lasting weight, energy and healthy habits.</span><span class="hi" lang="hi">सरल, विज्ञान-आधारित भारतीय न्यूट्रिशन कोचिंग — सही वजन, ऊर्जा और स्वस्थ आदतों के लिए।</span></p>
       <div class="socials"><a href="https://www.youtube.com/@VedikaHealthandWellness" target="_blank" rel="noopener">YouTube</a><a href="https://www.instagram.com/VedikaHealthandWellness" target="_blank" rel="noopener">Instagram</a><a href="https://www.fb.com/VedikaHealthandWellness" target="_blank" rel="noopener">Facebook</a></div>
     </div>
-    <div><h4><span class="en">Pages</span><span class="hi" lang="hi">पेज</span></h4><a href="../"><span class="en">Home</span><span class="hi" lang="hi">होम</span></a><a href="../about/"><span class="en">About</span><span class="hi" lang="hi">हमारे बारे में</span></a><a href="../services/"><span class="en">Services</span><span class="hi" lang="hi">सेवाएं</span></a><a href="../studio/" class=active aria-current=page><span class="en">Wellness Studio</span><span class="hi" lang="hi">वेलनेस स्टूडियो</span></a><a href="../programs/"><span class="en">Programs</span><span class="hi" lang="hi">प्लान्स</span></a><a href="../blog/"><span class="en">Blog</span><span class="hi" lang="hi">ब्लॉग</span></a><a href="../faq/"><span class="en">FAQ</span><span class="hi" lang="hi">सवाल-जवाब</span></a><a href="../contact/"><span class="en">Contact</span><span class="hi" lang="hi">संपर्क</span></a><a href="../book/"><span class="en">Book Consultation</span><span class="hi" lang="hi">कंसल्टेशन बुक करें</span></a><span id="footPages"></span></div>
-    <div><h4><span class="en">Contact</span><span class="hi" lang="hi">संपर्क</span></h4>
+    <div><p class="foot-title"><span class="en">Pages</span><span class="hi" lang="hi">पेज</span></p><a href="../"><span class="en">Home</span><span class="hi" lang="hi">होम</span></a><a href="../about/"><span class="en">About</span><span class="hi" lang="hi">हमारे बारे में</span></a><a href="../services/"><span class="en">Services</span><span class="hi" lang="hi">सेवाएं</span></a><a href="../studio/" class=active aria-current=page><span class="en">Wellness Studio</span><span class="hi" lang="hi">वेलनेस स्टूडियो</span></a><a href="../programs/"><span class="en">Programs</span><span class="hi" lang="hi">प्लान्स</span></a><a href="../blog/"><span class="en">Blog</span><span class="hi" lang="hi">ब्लॉग</span></a><a href="../faq/"><span class="en">FAQ</span><span class="hi" lang="hi">सवाल-जवाब</span></a><a href="../contact/"><span class="en">Contact</span><span class="hi" lang="hi">संपर्क</span></a><a href="../book/"><span class="en">Book Consultation</span><span class="hi" lang="hi">कंसल्टेशन बुक करें</span></a><span id="footPages"></span></div>
+    <div><p class="foot-title"><span class="en">Contact</span><span class="hi" lang="hi">संपर्क</span></p>
       <a href="tel:+918193989452">Nikhil: +91 81939 89452</a><a href="tel:+919897504931">Anupamand: +91 98975 04931</a>
       <a href="mailto:vedikawellness01@gmail.com">vedikawellness01@gmail.com</a><span><span class="en">Hariom Ashram, Kadwapani, Karbari Grant, Shimla Road, Dehradun, Uttarakhand - 248007</span><span class="hi" lang="hi">हरिओम आश्रम, कड़वापानी, करबारी ग्रांट, शिमला रोड, देहरादून, उत्तराखंड - 248007</span></span></div>
   </div>
   <div class="container disclaimer"><strong><span class="en">Important Wellness Disclaimer</span><span class="hi" lang="hi">महत्वपूर्ण स्वास्थ्य अस्वीकरण (Disclaimer)</span></strong> <span class="en">We are wellness and nutrition coaches, not licensed medical doctors. Our programs, calculators, and articles are for general health awareness and building healthy eating and lifestyle habits. They do not diagnose, treat, or replace medical care. Always follow your qualified doctor’s advice for medical conditions and prescribed medicines.</span><span class="hi" lang="hi">हम वेलनेस और पोषण कोच हैं, पेशेवर मेडिकल डॉक्टर नहीं। हमारे प्रोग्राम, कैलकुलेटर और लेख केवल स्वस्थ खान-पान और अच्छी जीवनशैली की आदतें विकसित करने के लिए हैं। किसी भी बीमारी या दवा के लिए कृपया हमेशा अपने योग्य डॉक्टर की सलाह का पालन करें।</span></div>
   <p class="copy">© <span id="yr"></span> Vedika Health &amp; Wellness. <span class="en">All rights reserved.</span><span class="hi" lang="hi">सर्वाधिकार सुरक्षित।</span></p>
 </footer>
-<a class="wa-float" href="https://wa.me/918193989452?text=Hi%2C%20I%20want%20some%20help%20related%20to%20my%20health%20issues" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">💬</a>
+<aside aria-label="Chat on WhatsApp"><a class="wa-float" href="https://wa.me/918193989452?text=Hi%2C%20I%20want%20some%20help%20related%20to%20my%20health%20issues" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">💬</a></aside>
 <script src="../script.js" defer></script>
 </body>
 </html>

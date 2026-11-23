@@ -141,6 +141,15 @@
   function ctaBand(rel) {
     return '<section class="cta-band"><div class="container"><h2>Ready to feel lighter and more energetic?</h2><p>Book a free call. A coach will guide you on a simple starting plan — zero pressure.</p><div class="cta-row center-row"><a href="' + rel + 'book/" class="btn btn-orange">Book Free Call</a></div></div></section>';
   }
+  // keep <title> within ~60 characters and descriptions within 160 so Google does not cut them off
+  function seoTitle(t) {
+    var full = t + ' | Vedika Wellness';
+    if (full.length <= 60) return full;
+    full = t + ' | Vedika';
+    if (full.length <= 60) return full;
+    return t.length <= 60 ? t : t.slice(0, 57).replace(/\s+\S*$/, '') + '…';
+  }
+  function seoDesc(d) { d = String(d || '').trim(); return d.length <= 160 ? d : d.slice(0, 157).replace(/\s+\S*$/, '') + '…'; }
   function buildPost(shell, p) {
     var rel = '../../', url = SITE + 'blog/' + p.slug + '/';
     var img = p.image ? '<img src="' + rel + p.image + '" alt="' + esc(p.title) + '" class="post-img round shadow" width="900" height="600">' : '';
@@ -149,7 +158,7 @@
       (p.excerpt ? '<p class="lead">' + esc(p.excerpt) + '</p>' : '') + img +
       '<div class="post-body">' + md(p.md, rel) + '</div>' +
       '<div class="post-cta"><h3>Want a plan made for you?</h3><p>Talk to our coaches for a simple plan that fits your body, food and routine.</p><div class="cta-row"><a href="' + rel + 'book/" class="btn btn-orange">Book Free Call</a><a href="' + rel + 'studio/" class="btn btn-light">Try Wellness Studio</a></div></div></article>';
-    var html = fillHead(shell, { title: p.title + ' | Vedika Wellness', desc: p.excerpt || p.title, url: url, image: p.image ? SITE + p.image : SITE + 'img/logo-badge.webp',
+    var html = fillHead(shell, { title: seoTitle(p.title), desc: seoDesc(p.excerpt || p.title), url: url, image: p.image ? SITE + p.image : SITE + 'img/logo-badge.webp',
       ld: { '@context': 'https://schema.org', '@type': 'Article', headline: p.title, description: p.excerpt || '', datePublished: p.iso, author: { '@type': 'Organization', name: 'Vedika Health and Wellness' } } });
     return fillMain(html, main);
   }
@@ -157,7 +166,7 @@
     var rel = '../', url = SITE + p.slug + '/';
     var main = '<section class="page-hero"><div class="blob b1"></div><div class="blob b2"></div><div class="container"><h1>' + esc(p.title) + '</h1></div></section>\n' +
       '<section class="section"><div class="container narrow post-body">' + md(p.md, rel) + '</div></section>\n' + ctaBand(rel);
-    var html = fillHead(shell, { title: p.title + ' | Vedika Wellness', desc: p.title, url: url, image: SITE + 'img/logo-badge.webp' });
+    var html = fillHead(shell, { title: seoTitle(p.title), desc: seoDesc(p.title + ' – Vedika Health and Wellness'), url: url, image: SITE + 'img/logo-badge.webp' });
     html = html.replace(/ class=active aria-current=page/g, '');
     return fillMain(html, main);
   }
