@@ -418,7 +418,7 @@ a.card{text-decoration:none;color:inherit;display:block}
 .sheet-tools input[type=search]{width:100%;font:inherit;padding:.75rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);margin-bottom:.6rem;min-height:48px}
 
 /* footer additions */
-.socials{display:flex;gap:.8rem;margin-top:.8rem;flex-wrap:wrap}.socials a{display:inline!important;font-weight:700;border-bottom:1px solid rgba(255,255,255,.3)}
+.socials{display:flex;gap:.8rem;margin-top:.8rem;flex-wrap:wrap}
 .disclaimer{margin-top:2rem;padding:1rem 1.2rem;font-size:.8rem;background:rgba(255,255,255,.07);border-radius:14px;line-height:1.6}
 .wa-float{font-size:1.7rem}
 
@@ -753,3 +753,29 @@ td.p{color:#12804a;font-weight:700}td.c{color:#b45f06;font-weight:700}td.f{color
 [hidden]{display:none!important}
 .hero>.container,.page-hero>.container{position:relative;z-index:1}
 .blob{z-index:0}
+
+/* ===== social icons (icon-only links) ===== */
+.sico{display:inline-grid;place-items:center;border-radius:50%;line-height:0;flex-shrink:0;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.sico img{display:block;border-radius:50%}
+.sico:hover{transform:translateY(-3px) scale(1.07);box-shadow:0 8px 18px rgba(0,0,0,.22)}
+.sico:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.topbar .sico{opacity:1}
+.topbar .sico:hover{transform:scale(1.15);box-shadow:none;text-decoration:none}
+.tb-right{gap:.7rem}
+.socials{display:flex;gap:.7rem;margin-top:1.1rem;flex-wrap:wrap}
+.foot-grid a.sico{display:inline-grid;margin:0;font-size:0}
+.ibtns{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+.soc-row{display:flex;justify-content:center;gap:1.6rem;flex-wrap:wrap}
+.soc-row.left{justify-content:flex-start;gap:.8rem;margin-top:1.3rem}
+.sico.lg{box-shadow:0 8px 22px rgba(20,60,25,.2)}
+.sico.lg img{width:72px;height:72px}
+@media (max-width:480px){.sico.lg img{width:62px;height:62px}.soc-row{gap:1.2rem}}
+/* floating WhatsApp = the real WhatsApp logo */
+.wa-float{background:transparent;font-size:0;line-height:0;box-shadow:0 8px 22px rgba(0,0,0,.28);transition:transform .2s}
+.wa-float img{display:block;width:100%;height:100%;border-radius:50%}
+.wa-float:hover{transform:scale(1.08)}
+@media (max-width:640px){.wa-float{width:52px;height:52px}.footer{padding-bottom:calc(4.5rem + env(safe-area-inset-bottom))}}
+/* keep each coach's face in frame when the photo is cropped */
+.coaches .coach:nth-child(1) .coach-img{object-position:50% 22%}
+.coaches .coach:nth-child(2) .coach-img{object-position:50% 85%}
+@media (max-width:760px){.coach-img{aspect-ratio:1/1!important;height:auto!important}}
